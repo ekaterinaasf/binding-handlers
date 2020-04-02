@@ -1,44 +1,39 @@
 try {
-  const title = 'fill-in-1';
+  const title = "fill-in-1";
   console.group(title);
 
   const obj = {
     state: {
-      _: 0,
-      _: 0
+      red: 0,
+      blue: 0
     },
     log: [],
-    handler: function (element, _) {
+    handler: function(element, event) {
       // debugger;
       const preRed = Number(event.x);
       const preBlue = Number(event.y);
-      this.state.red = (_ / window.innerWidth) * 255;
-      this.state.blue = (_ / window.innerHeight) * 255;
-      element.style._ = `rgb(${_}, 0, ${_})`;
-      this.log.push(
-        JSON.parse(JSON.stringify(this.state))
-      );
+      this.state.red = (preRed / window.innerWidth) * 255;
+      this.state.blue = (preBlue / window.innerHeight) * 255;
+      element.style.backgroundColor = `rgb(${this.state.red}, 0, ${this.state.blue})`;
+      this.log.push(JSON.parse(JSON.stringify(this.state)));
     },
-    view: function (_) {
+    view: function(id) {
       // debugger;
-      const container = document.createElement('div');
+      const container = document.createElement("div");
       container.id = id;
-      container.onmousemove = this.handler.bind(_, _);
-      container.style.height = '20em';
+      container.onmousemove = this.handler.bind(this, container);
+      container.style.height = "20em";
 
-      container.className = 'exercise';
-      container.onclick = (function (e) {
+      container.className = "exercise";
+      container.onclick = function(e) {
         if (e.target === e.currentTarget) console.log(title, this);
-      }).bind(_);
+      }.bind(this);
 
       return container;
-    },
-  }
+    }
+  };
 
-  document
-    .getElementById('root')
-    .appendChild(obj._(title));
-
+  document.getElementById("root").appendChild(obj.view(title));
 
   console.groupEnd();
 } catch (err) {
