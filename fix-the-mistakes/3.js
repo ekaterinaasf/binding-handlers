@@ -7,19 +7,19 @@ try {
   const obj = {
     state: {
       num: 0,
-      charCode: 0
+      charCode: 0,
     },
     log: [],
-    numToCharCode: function() {
+    numToCharCode: function () {
       // 1 mistake
       this.state.charCode = ((this.state.num % 255) + 255) % 255; //don't understand
     },
-    renderCharCode: function() {
+    renderCharCode: function () {
       // 1 mistake
       //String.fromCharCode - string method to create string from Unicode
       return `<text>${String.fromCharCode(this.state.charCode)}</text>`; //replaced num with charCode
     },
-    handler: function(display, event) {
+    handler: function (display, event) {
       // 2 mistakes
       // debugger;
       this.state.num = Number(event.target.value);
@@ -29,7 +29,7 @@ try {
       display.innerHTML = this.renderCharCode(); //replaced 2 lines above with these 2 lines
       this.log.push(JSON.parse(JSON.stringify(this.state)));
     },
-    view: function(id) {
+    view: function (id) {
       // 3 mistakes
       debugger;
       const outputEl = document.createElement("code");
@@ -46,12 +46,12 @@ try {
       container.appendChild(inputEl);
       container.appendChild(outputEl);
       container.className = "exercise";
-      container.onclick = function(e) {
+      container.onclick = function (e) {
         if (e.target === e.currentTarget) console.log(title, this); //removed bind
       }.bind(this); //added .bind(this);
 
       return container;
-    }
+    },
   };
 
   document.getElementById("root").appendChild(obj.view(title));
@@ -80,7 +80,7 @@ try {
 
   obj.state.num = -2;
   obj.numToCharCode();
-  assert(JSON.stringify(obj.state) === '{"num":-1,"charCode":254}', "Test 4");
+  assert(JSON.stringify(obj.state) === '{"num":-2,"charCode":254}', "Test 4"); //correcter num from -1 to -2
 
   obj.state.num = 140;
   obj.numToCharCode();
